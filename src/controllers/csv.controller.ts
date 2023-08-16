@@ -1,19 +1,19 @@
 import { Request, Response } from "express"
-import { createCsvService, getLoadCsvService } from "../services/csv.service"
+import { createCsvService, getCsvService } from "../services/csv.service"
 
 const createCsv = async (req: Request, res: Response) => {
-    const body = req.body
-    const csv = await createCsvService(body)
-    res.status(201).json(csv)
+    const file = req.file
+    const csvFile = await createCsvService(file)
+    res.status(201).json(csvFile)
 }
 
-const getCsvLoad = async (req: Request, res: Response) => {
+const getCsv = async (req: Request, res: Response) => {
     const {q} = req.params
-    const csv = await getLoadCsvService(q)
+    const csv = await getCsvService(q)
     res.status(200).json(csv)
 }
 
 export {
     createCsv,
-    getCsvLoad,
+    getCsv,
 }
