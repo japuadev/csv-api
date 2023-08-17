@@ -1,10 +1,7 @@
 import { Router } from "express"
-import {csvRouter} from "./csv.router"
+import {userRouter} from "./user.router"
 
 const routers = Router()
+routers.use(userRouter)
 
-routers.use(csvRouter)
-
-export {
-  routers
-}
+export { routers }

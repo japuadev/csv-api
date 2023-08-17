@@ -1,5 +1,5 @@
-export type CsvModel = {
-    [id: number]: number,
+export type UserModel = {
+    id?: number,
     name?: string,
     city?: string,
     country?: string,

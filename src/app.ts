@@ -13,7 +13,7 @@ app.use('/api', routers)
 
 
 app.use('*', (req: Request, res: Response) => {
-  throw new Error('Rota não encontrada')
+  throw new Error('Route not found.')
 })
 
 const port = process.env.PORT || 3000
