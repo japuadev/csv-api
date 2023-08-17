@@ -5,4 +5,5 @@ export enum HttpStatus {
   INTERNAL_SERVER_ERROR = 500,
   OK = 200,
   UNAUTHORIZED = 401,
+  CREATED = 201,
 }

@@ -14,13 +14,18 @@ function notEmptyObject(obj: any): boolean {
 }
 
 export const importUserCsvService = async (file: any): Promise<object> => {
-  const filePath = file.path;
+  if(!file){
+    throw new AppError("To insert data, it's necessary send a csv file.", HttpStatus.BAD_REQUEST)
+  }
+
   if (file.mimetype != "text/csv") {
     throw new AppError(
       "File extension is not supported.",
       HttpStatus.BAD_REQUEST,
     );
   }
+
+  const filePath = file.path;
 
   fs.createReadStream(filePath)
     .pipe(csvParser())
@@ -38,7 +43,7 @@ export const importUserCsvService = async (file: any): Promise<object> => {
       fs.unlinkSync(filePath);
     });
 
-  return { message: "Data imported successfully.", status: HttpStatus.OK };
+  return { message: "Data imported successfully.", status: HttpStatus.CREATED };
 };
 
 export const getUserService = async (
