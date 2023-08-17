@@ -1,14 +1,17 @@
-import { Router } from "express"
+import { Router } from "express";
 import * as UserController from "../controllers/user.controller";
-import multer from 'multer';
+import multer from "multer";
 
-const storage = multer.diskStorage({destination: './src/temp/'})
-const upload = multer({ storage })
+const storage = multer.diskStorage({ destination: "./src/temp/" });
+const upload = multer({ storage });
 
-const userRouter = Router()
+const userRouter = Router();
 
-userRouter.post('/files', [upload.single('file')], UserController.importUserCsv)
-userRouter.get('/users', UserController.getUsers)
+userRouter.post(
+  "/files",
+  [upload.single("file")],
+  UserController.importUserCsv,
+);
+userRouter.get("/users", UserController.getUsers);
 
-export { userRouter }
-
+export { userRouter };
