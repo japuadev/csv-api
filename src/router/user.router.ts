@@ -2,7 +2,7 @@ import { Router } from "express"
 import * as UserController from "../controllers/user.controller";
 import multer from 'multer';
 
-const storage = multer.diskStorage({destination: 'temp/'})
+const storage = multer.diskStorage({destination: './src/temp/'})
 const upload = multer({ storage })
 
 const userRouter = Router()

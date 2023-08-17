@@ -1,8 +1,11 @@
 import 'express-async-errors'
-import express, { Request, Response } from 'express'
+import express, { ErrorRequestHandler, NextFunction, Request, Response } from 'express'
 import { routers } from './router/index.router'
 import * as dotenv from 'dotenv'
 import cors from 'cors'
+import { AppError } from './models/errors.model'
+import { HttpStatus } from './utils/http.status'
+
 
 dotenv.config()
 const app = express()
@@ -13,7 +16,19 @@ app.use('/api', routers)
 
 
 app.use('*', (req: Request, res: Response) => {
-  throw new Error('Route not found.')
+  throw new AppError('Route Not Found.', HttpStatus.NOT_FOUND)
+})
+
+app.use((err: ErrorRequestHandler | Error | AppError, req: Request, res: Response, next: NextFunction) => {
+  const isError = err instanceof Error
+  const isAppError = err instanceof AppError
+
+  const objError: AppError = {
+    message: isAppError ? err.message : isError ? err.message : 'Internal Server Error',
+    status: isAppError ? err.status : HttpStatus.INTERNAL_SERVER_ERROR,
+  }
+
+  res.status(objError.status).json(objError)
 })
 
 const port = process.env.PORT || 3000
